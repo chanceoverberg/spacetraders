@@ -1,10 +1,97 @@
 .App {
   background-color: #282c34;
   height: 100vh;
+  color: white;
+  font-size: 16px;
+}
+
+.hnavbar-ul {
+  background-color: #0b152a8c;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  justify-content:space-evenly;
+  display: flex;
+}
+
+.hnavbar-li {
+  display: inline;
+  text-decoration: none;
+}
+
+.hnavbar-li-button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;   
+  color: white;
+  font-size: 28px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 .Fleet {
   position: relative;
   float:left; 
   color: white;
+  font-size: 24px;
+}
+
+.Agent {
+  position: relative;
+  color: white;
+  font-size: 18px;
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  font-size: 32px;
+}
+
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  background-color: rgba(1, 6, 20, 0.657);
+
+  border-radius: 25px;
+  border: 2px;
+  padding: 0px 0px 20px 20px;
+  height: 80vh;
+  width: 90vw;
+  overflow-y:scroll;
+
+  font-size: 24px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track 
+::-webkit-scrollbar-track {
+  background: #2d45778c; 
+  -webkit-box-shadow: inset 0 0 6px     rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+*/
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px     rgba(0,0,0,0.5); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

@@ -1,8 +1,21 @@
 export interface AgentData {
-    accountId: string
-    symbol: string
-    headquarters: string
-    credits: number
+    accountId: string,
+    symbol: string,
+    headquarters: string,
+    credits: number,
+    startingFaction: string
+  }
+
+  export interface SystemData {
+    systemSymbol: string,
+    symbol: string,
+    type: string,
+    x: number,
+    y: number,
+    orbitals: [ {symbol: string} ],
+    traits: [ {symbol: string, name: string, description: string} ],
+    chart: { submittedBy: string, submittedOn: string },
+    faction: { symbol: string }    
   }
   
   export interface Inventory {
