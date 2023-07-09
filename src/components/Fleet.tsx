@@ -1,20 +1,10 @@
 import { FunctionComponent } from "react";
-import { Cargo, ShipData } from "../types";
+import FleetCard from "./FleetCard";
 
-interface IFleetProps {
-    cargo: Cargo;
-    //shipData: ShipData;
-    symbol: string;
-}
-
-const Fleet: FunctionComponent<IFleetProps> = (props) => {
-    const {cargo, symbol} = props;
+const Fleet: FunctionComponent = () => {
 
     return (
-        <div className="Fleet">
-            <p>Fleet</p>
-            <p>{symbol}</p>
-        </div>
+        <FleetCard />
     );
 }
 

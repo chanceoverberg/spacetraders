@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { SystemData } from "../types";
+import { SystemData } from "../types/index";
 import getOptions from "../getOptions";
 
 interface IProps {

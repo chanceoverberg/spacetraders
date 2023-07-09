@@ -5,24 +5,13 @@ import Agent from './Agent';
 import System from './System';
 import Contract from './Contract';
 import getOptions from '../getOptions';
-
-//const initialFleetData = {
-//  cargo: {capacity: 0, inventory: [], units: 0}, shipData: null, symbol: ""
-//}
+import Fleet from './Fleet';
 
 async function getAgentData<AgentData>(): Promise<AgentData> {
   const response = await fetch('https://api.spacetraders.io/v2/my/agent', getOptions);
   const response_1 = await response.json();
   return response_1.data as AgentData;
 }
-
-// async function getShipData(): Promise<any> {
-//   const response = await fetch('https://api.spacetraders.io/v2/my/ships', getOptions);
-//   const response_1 = await response.json();
-//   console.log(response_1.data);
-//   return response_1.data;
-// }
-
 
 const initialAgentData: AgentData = {
   accountId: "",
@@ -36,11 +25,8 @@ interface MainProps {
     currentPage: string
 }
 
-
 function Main (props: MainProps) {
-  //const data: AgentData = getAgentData();
   const [agentData, setAgentData] = useState(initialAgentData);
-  //const [fleetData, setFleetData] = useState(initialFleetData);
   const [system, setSystem] = useState("");
   const [waypoint, setWaypoint] = useState("");
 
@@ -60,7 +46,7 @@ function Main (props: MainProps) {
         return <Agent getAgentData={getAgentDataOnLoad} agentData={agentData}/>;
       }
       case "FLEET": {
-        return <>Fleet</>;
+        return <Fleet />;
       }
       case "CONTRACT": {
         return <Contract />;

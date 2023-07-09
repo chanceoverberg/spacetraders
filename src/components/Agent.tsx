@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect } from "react";
 import AgentCard from "./AgentCard";
-import { AgentData } from "../types";
+import { AgentData } from "../types/index";
 
 interface IProps {
     getAgentData: () => void;
@@ -15,9 +15,7 @@ const Agent: FunctionComponent<IProps> = (props: IProps) => {
     }, []);
 
     return (
-        <>
-            <AgentCard agent={agentData}/>
-        </>
+        <AgentCard agent={agentData}/>
     );
 }
 

@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { AgentData } from "../types";
+import { AgentData } from "../types/index";
 
 interface IProps {
     agent: AgentData;

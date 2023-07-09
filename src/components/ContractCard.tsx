@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { ContractData } from "../types";
+import { ContractData } from "../types/index";
 import getOptions from "../getOptions";
 import postOptions from "../postOptions";
 

@@ -30,6 +30,16 @@ export interface AgentData {
       payment: { onAccepted: number, onFulfilled: number } },
     type: string,
   }
+
+  export interface FleetData{
+    fleet: ShipData[]
+  }
+
+  export interface ShipData {
+    cargo: Cargo,
+    fuel: Fuel,
+    nav: Nav
+  }
   
   export interface Inventory {
     description: string,
@@ -42,11 +52,6 @@ export interface AgentData {
     capacity: number,
     inventory: Inventory[],
     units: number,
-  }
-
-  export interface ShipData {
-    fuel: Fuel
-    nav: Nav
   }
   
   export interface Fuel {
