@@ -45,7 +45,7 @@ const options = {
     console.log(response_1.data);
   }
 
-const AgentCard: FunctionComponent = () => {
+const ContractCard: FunctionComponent = () => {
 
     const [contractData, setContractData] = useState(initialContractData);
 
@@ -90,4 +90,4 @@ const AgentCard: FunctionComponent = () => {
     );
 }
 
-export default AgentCard;
+export default ContractCard;
