@@ -27,7 +27,7 @@ function App() {
         return <Main currentPage="SYSTEM" />;
       }
       default: {
-        return null;
+        return <Main currentPage="AGENT" />;
       }
     }
   }, [currentPage]);

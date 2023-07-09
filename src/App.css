@@ -29,6 +29,35 @@
   font-size: 28px;
 }
 
+.button-container {
+  display: inline-flex;
+}
+
+.refresh-button {
+  background-color: rgba(1, 6, 20, 0.657);
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.accept-button {
+  background-color: #282c34;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -49,7 +78,7 @@ a {
 
 /* Add some padding inside the card container */
 .container {
-  padding: 20px 20px;
+  padding: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   font-size: 32px;

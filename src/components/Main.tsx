@@ -2,8 +2,9 @@ import { useState, useEffect, FunctionComponent, useMemo } from 'react';
 import '../App.css';
 import { AgentData, SystemData } from '../types';
 import Agent from './Agent';
-import SystemCard from './SystemCard';
 import token from '../token';
+import System from './System';
+import Contract from './Contract';
 
 const initialFleetData = {
   cargo: {capacity: 0, inventory: [], units: 0}, shipData: null, symbol: ""
@@ -57,11 +58,14 @@ function Main (props: MainProps) {
   const [fleetData, setFleetData] = useState(initialFleetData);
   const [system, setSystem] = useState("");
   const [waypoint, setWaypoint] = useState("");
+  const [refresh, setRefresh] = useState(0);
 
   async function getAgentDataOnLoad() {
   setAgentData(await getAgentData());
-  setSystem(agentData.headquarters.slice(0,7));
+  setSystem(agentData.headquarters.slice(0,6));
   setWaypoint(agentData.headquarters);
+  console.log(system);
+  console.log(waypoint);
   console.log(agentData);
   }
 
@@ -75,20 +79,25 @@ function Main (props: MainProps) {
         return <>Fleet</>;
       }
       case "CONTRACT": {
-        return <>Contract</>;
+        return <Contract />;
       }
       case "SYSTEM": {
-        return <SystemCard system={system} waypoint={waypoint}/>;
+        return <System system={system} waypoint={waypoint}/>;
       }
       default: {
         return null;
       }
     }
-  }, [props.currentPage]);
+  }, [props.currentPage, refresh]);
 
 
   return (
     <>
+    {props.currentPage === "AGENT" ? 
+    <div className="button-container">
+        <button className="refresh-button" onClick={() => setRefresh(refresh + 1)}>Refresh</button>
+          </div> : 
+          null}
         {page}
     </>
   );

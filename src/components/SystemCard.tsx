@@ -65,7 +65,6 @@ const SystemCard: FunctionComponent<IProps> = (props: IProps) => {
                     })}
                 </ul>
             </div>
-
     );
 }
 

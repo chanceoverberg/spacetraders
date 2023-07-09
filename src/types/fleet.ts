@@ -17,6 +17,19 @@ export interface AgentData {
     chart: { submittedBy: string, submittedOn: string },
     faction: { symbol: string }    
   }
+
+  export interface ContractData {
+    accepted: boolean,
+    deadlineToAccept: string,
+    expiration: string,
+    factionSymbol: string,
+    fulfilled: boolean,
+    id: string,
+    terms: { deadline: string, 
+      deliver: [{ destinationSymbol: string, tradeSymbol: string, unitsFulfilled: number, unitsRequired: number }],
+      payment: { onAccepted: number, onFulfilled: number } },
+    type: string,
+  }
   
   export interface Inventory {
     description: string,
