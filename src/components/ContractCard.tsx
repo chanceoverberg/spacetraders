@@ -1,6 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { ContractData } from "../types";
-import token from "../token";
+import getOptions from "../getOptions";
+import postOptions from "../postOptions";
 
 const initialContractData: ContractData[] = [{
     id: "",
@@ -17,23 +18,8 @@ const initialContractData: ContractData[] = [{
     deadlineToAccept: "",
 }]
 
-const options = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  };
-
-  const postOptions = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-  }
-
   async function getContractData<ContractData>(): Promise<ContractData> {
-    const response = await fetch(`https://api.spacetraders.io/v2/my/contracts`, options);
+    const response = await fetch(`https://api.spacetraders.io/v2/my/contracts`, getOptions);
     const response_1 = await response.json();
     console.log(response_1.data);
     return response_1.data as ContractData;

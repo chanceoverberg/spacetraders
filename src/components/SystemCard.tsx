@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { SystemData } from "../types";
-import token from "../token";
+import getOptions from "../getOptions";
 
 interface IProps {
     system: string,
@@ -19,15 +19,8 @@ const initialSystemData: SystemData = {
     faction: { symbol: "" } 
 }
 
-const options = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  };
-
 async function getSystemData<SystemData>(system: string, waypoint: string): Promise<SystemData> {
-    const response = await fetch(`https://api.spacetraders.io/v2/systems/${system}/waypoints/${waypoint}`, options);
+    const response = await fetch(`https://api.spacetraders.io/v2/systems/${system}/waypoints/${waypoint}`, getOptions);
     const response_1 = await response.json();
     return response_1.data as SystemData;
   }

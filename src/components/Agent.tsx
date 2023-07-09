@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import AgentCard from "./AgentCard";
 import { AgentData } from "../types";
 
@@ -9,7 +9,10 @@ interface IProps {
 
 const Agent: FunctionComponent<IProps> = (props: IProps) => {
     const {getAgentData, agentData} = props;
-    getAgentData();
+    
+    useEffect(() => {
+        getAgentData();
+    }, []);
 
     return (
         <>

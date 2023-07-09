@@ -1,42 +1,27 @@
-import { useState, useEffect, FunctionComponent, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import '../App.css';
-import { AgentData, SystemData } from '../types';
+import { AgentData } from '../types';
 import Agent from './Agent';
-import token from '../token';
 import System from './System';
 import Contract from './Contract';
+import getOptions from '../getOptions';
 
-const initialFleetData = {
-  cargo: {capacity: 0, inventory: [], units: 0}, shipData: null, symbol: ""
-}
-
-const options = {
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-};
-
-const postOptions = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-};
+//const initialFleetData = {
+//  cargo: {capacity: 0, inventory: [], units: 0}, shipData: null, symbol: ""
+//}
 
 async function getAgentData<AgentData>(): Promise<AgentData> {
-  const response = await fetch('https://api.spacetraders.io/v2/my/agent', options);
+  const response = await fetch('https://api.spacetraders.io/v2/my/agent', getOptions);
   const response_1 = await response.json();
   return response_1.data as AgentData;
 }
 
-async function getShipData(): Promise<any> {
-  const response = await fetch('https://api.spacetraders.io/v2/my/ships', options);
-  const response_1 = await response.json();
-  console.log(response_1.data);
-  return response_1.data;
-}
+// async function getShipData(): Promise<any> {
+//   const response = await fetch('https://api.spacetraders.io/v2/my/ships', getOptions);
+//   const response_1 = await response.json();
+//   console.log(response_1.data);
+//   return response_1.data;
+// }
 
 
 const initialAgentData: AgentData = {
@@ -55,18 +40,17 @@ interface MainProps {
 function Main (props: MainProps) {
   //const data: AgentData = getAgentData();
   const [agentData, setAgentData] = useState(initialAgentData);
-  const [fleetData, setFleetData] = useState(initialFleetData);
+  //const [fleetData, setFleetData] = useState(initialFleetData);
   const [system, setSystem] = useState("");
   const [waypoint, setWaypoint] = useState("");
-  const [refresh, setRefresh] = useState(0);
 
   async function getAgentDataOnLoad() {
-  setAgentData(await getAgentData());
-  setSystem(agentData.headquarters.slice(0,6));
-  setWaypoint(agentData.headquarters);
-  console.log(system);
-  console.log(waypoint);
-  console.log(agentData);
+    setAgentData(await getAgentData());
+    setSystem(agentData.headquarters.slice(0,6));
+    setWaypoint(agentData.headquarters);
+    console.log(system);
+    console.log(waypoint);
+    console.log(agentData);
   }
 
   const page: JSX.Element | null = useMemo(() => {
@@ -88,16 +72,16 @@ function Main (props: MainProps) {
         return null;
       }
     }
-  }, [props.currentPage, refresh]);
+  }, [props.currentPage, agentData, getAgentDataOnLoad, system, waypoint]);
 
 
   return (
     <>
     {props.currentPage === "AGENT" ? 
-    <div className="button-container">
-        <button className="refresh-button" onClick={() => setRefresh(refresh + 1)}>Refresh</button>
-          </div> : 
-          null}
+      <div className="button-container">
+        <button className="refresh-button" onClick={getAgentDataOnLoad}>Refresh</button>
+      </div> : 
+        null}
         {page}
     </>
   );
