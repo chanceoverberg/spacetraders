@@ -1,6 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import getOptions from "../getOptions";
 import { ShipData } from "../types/index";
+import Collapsible from "./Collapsible";
 
 async function getFleetData<FleetData>(): Promise<FleetData> {
     const response = await fetch('https://api.spacetraders.io/v2/my/ships', getOptions);
@@ -74,27 +75,18 @@ const FleetCard: FunctionComponent = () => {
             { fleetData ? 
                 fleetData.map((ship, index) => {
                     return (
-                    <div key={index}>
-                        <h2>Ship {index+1}:</h2>
-                        <h3>Cargo (capacity: {ship.cargo.capacity}):</h3>
-                        <ul>
-                            <li>Units: {ship.cargo.units}</li>
-                        </ul>
-                        <h3>Fuel:</h3>
-                        <ul>
-                            <li>Capacity: {ship.fuel.current}</li>
-                            <li>Current: {ship.fuel.current}</li>
-                        </ul>
-                        <h3>Nav:</h3>
-                        <ul>
-                            <li>Flight mode: {ship.nav.flightMode}</li>
-                            <li>Status: {ship.nav.status} in system {ship.nav.systemSymbol} at waypoint {ship.nav.waypointSymbol}</li>
-                            <li>Departed from {ship.nav.route.departure.symbol} to {ship.nav.route.destination.symbol}</li>
-                        </ul>
-                    </div>
+                        <Collapsible label={`Ship ${index+1}`} buttonStyle="ship-toggle-button" containerStyle="ship-toggle-button-container" key={index}>
+                                <h2>Cargo ({ship.cargo.units}/{ship.cargo.capacity}):</h2>
+                                <p>Fuel: {ship.fuel.current}/{ship.fuel.current}</p>
+                                <h4>Nav details:</h4>
+                                <ul>
+                                    <li>Flight mode: {ship.nav.flightMode}</li>
+                                    <li>Status: {ship.nav.status} in system {ship.nav.systemSymbol} at waypoint {ship.nav.waypointSymbol}</li>
+                                    <li>Departed from {ship.nav.route.departure.symbol} to {ship.nav.route.destination.symbol}</li>
+                                </ul>
+                        </Collapsible>
                 )}) : <p>no data</p>
             }
-            <button onClick={() => console.log(fleetData[0])}>log fleet state data</button>
         </div>
     )
 }

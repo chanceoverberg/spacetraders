@@ -85,10 +85,11 @@ a {
 
   border-radius: 25px;
   border: 2px;
-  padding: 0px 0px 20px 20px;
+  padding: 0px 2px 20px 20px;
   height: 80vh;
   width: 90vw;
   overflow-y:scroll;
+  overflow-x: hidden;
 
   font-size: 24px;
 }
@@ -116,4 +117,39 @@ a {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.content {
+  border: 1px solid rgb(128, 123, 123);
+  padding: 0.5rem;
+  border-radius: 5px;
+  height: auto;
+}
+  
+.content-parent {
+  height: 0px;
+  overflow: hidden;
+}
+  
+.content-show {
+  height: auto;
+}
+
+.ship-toggle-button-container {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: 1px solid rgb(128, 123, 123);
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.ship-toggle-button {
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: 0px;
+  text-align: left;
+  width: 89vw;
+  cursor:pointer;
+  color: white;
+  font-size: 28px;
 }
