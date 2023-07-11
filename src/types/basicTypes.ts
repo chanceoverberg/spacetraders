@@ -123,3 +123,15 @@ export interface AgentData {
     totalPrice: number
     timestamp: string
   }
+
+  export interface WaypointData {
+    systemSymbol: string,
+    symbol: string,
+    type: string,
+    x: number,
+    y: number,
+    orbitals: [{symbol: string}],
+    traits: [{symbol: string, name: string, description: string}],
+    chart: {submittedBy: string, submittedOn: string},
+    faction: {symbol: string},
+  }

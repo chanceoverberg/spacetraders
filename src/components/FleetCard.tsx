@@ -75,7 +75,7 @@ const FleetCard: FunctionComponent = () => {
             { fleetData ? 
                 fleetData.map((ship, index) => {
                     return (
-                        <Collapsible label={`Ship ${index+1}`} buttonStyle="ship-toggle-button" containerStyle="ship-toggle-button-container" key={index}>
+                        <Collapsible label={`Ship ${index+1}`} key={index}>
                                 <h2>Cargo ({ship.cargo.units}/{ship.cargo.capacity}):</h2>
                                 <p>Fuel: {ship.fuel.current}/{ship.fuel.current}</p>
                                 <h4>Nav details:</h4>
