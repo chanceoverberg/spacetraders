@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode, useRef, useState } from "react";
+import { FunctionComponent, ReactNode, useState } from "react";
 
 interface IProps {
     label: string;
@@ -11,13 +11,9 @@ const Collapsible: FunctionComponent<IProps> = (props: IProps) => {
     const { label, buttonStyle, containerStyle, children } = props;
 
     const [open, setOpen] = useState(false);
-    const contentRef = useRef();
 
     const toggle = () => {
         setOpen(!open);
-        if (contentRef.current) {
-            console.log(contentRef.current);
-        }
     }
 
     return (
