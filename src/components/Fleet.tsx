@@ -1,10 +1,16 @@
 import { FunctionComponent } from "react";
 import FleetCard from "./FleetCard";
 
-const Fleet: FunctionComponent = () => {
+interface IProps {
+    system: string,
+}
+
+const Fleet: FunctionComponent<IProps> = (props: IProps) => {
+
+    const { system } = props;
 
     return (
-        <FleetCard />
+        <FleetCard system={system}/>
     );
 }
 

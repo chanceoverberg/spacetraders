@@ -1,24 +1,16 @@
 import { useState, useMemo, useEffect } from 'react';
 import '../App.css';
-import { AgentData } from '../types';
 import Agent from './Agent';
 import System from './System';
 import Contract from './Contract';
 import getOptions from '../getOptions';
 import Fleet from './Fleet';
+import { initialAgentData } from '../initialValues';
 
 async function getAgentData<AgentData>(): Promise<AgentData> {
   const response = await fetch('https://api.spacetraders.io/v2/my/agent', getOptions);
   const response_1 = await response.json();
   return response_1.data as AgentData;
-}
-
-const initialAgentData: AgentData = {
-  accountId: "",
-  symbol: "",
-  headquarters: "",
-  credits: 0,
-  startingFaction: ""
 }
 
 interface MainProps {
@@ -46,7 +38,7 @@ function Main (props: MainProps) {
         return <Agent getAgentData={getAgentDataOnLoad} agentData={agentData}/>;
       }
       case "FLEET": {
-        return <Fleet />;
+        return <Fleet system={system}/>;
       }
       case "CONTRACT": {
         return <Contract />;

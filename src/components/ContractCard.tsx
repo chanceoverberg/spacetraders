@@ -1,22 +1,7 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { ContractData } from "../types/index";
 import getOptions from "../getOptions";
 import postOptions from "../postOptions";
-
-const initialContractData: ContractData[] = [{
-    id: "",
-    factionSymbol: "",
-    type: "",
-    terms: 
-        { deadline: "", 
-        deliver: [{ tradeSymbol: "", destinationSymbol: "", unitsRequired: 0, unitsFulfilled: 0 }],
-        payment: { onAccepted: 0, onFulfilled: 0 } 
-        },
-    accepted: false,
-    fulfilled: false,
-    expiration: "",
-    deadlineToAccept: "",
-}]
+import { initialContractData } from "../initialValues";
 
   async function getContractData<ContractData>(): Promise<ContractData> {
     const response = await fetch(`https://api.spacetraders.io/v2/my/contracts`, getOptions);

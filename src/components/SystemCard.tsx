@@ -1,37 +1,13 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { SystemData, WaypointData } from "../types/index";
 import getOptions from "../getOptions";
 import Collapsible from "./Collapsible";
 import Dropdown from "./Dropdown";
+import { initialSystemData, initialWaypointData } from "../initialValues";
 
 interface IProps {
     system: string,
     waypoint: string,
 }
-
-const initialSystemData: SystemData = {
-    systemSymbol: "",
-    symbol: "",
-    type: "",
-    x: 0,
-    y: 0,
-    orbitals: [ {symbol: ""} ],
-    traits: [ {symbol: "", name: "", description: ""} ],
-    chart: { submittedBy: "", submittedOn: "" },
-    faction: { symbol: "" } 
-}
-
-const initialWaypointData: WaypointData[] = [{
-    systemSymbol: "",
-    symbol: "",
-    type: "",
-    x: 0,
-    y: 0,
-    orbitals: [{symbol: ""}],
-    traits: [{symbol: "", name: "", description: ""}],
-    chart: {submittedBy: "", submittedOn: ""},
-    faction: {symbol: ""},
-}]
 
 async function getSystemData<SystemData>(system: string, waypoint: string): Promise<SystemData> {
     const response = await fetch(`https://api.spacetraders.io/v2/systems/${system}/waypoints/${waypoint}`, getOptions);

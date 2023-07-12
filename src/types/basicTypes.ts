@@ -36,6 +36,7 @@ export interface AgentData {
   }
 
   export interface ShipData {
+    symbol: string,
     cargo: Cargo,
     fuel: Fuel,
     nav: Nav
