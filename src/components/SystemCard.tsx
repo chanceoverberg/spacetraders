@@ -63,6 +63,7 @@ const SystemCard: FunctionComponent<IProps> = (props: IProps) => {
         setWaypointData(await getWaypointData(system));
     };
 
+    // Passed to Dropdown so it can update the state
     const selectWaypoint = (waypoint: string, index: number): void => {
         setSelectedWaypoint(waypoint);
         setSelectedWaypointIndex(index);
@@ -71,7 +72,7 @@ const SystemCard: FunctionComponent<IProps> = (props: IProps) => {
     // Set options for dropdown menu
     const setOptions = () => {
         waypointData.map((waypoint, index) => {
-            options[index] = {value: index, label: waypoint.symbol};
+            options[index] = {value: index, label: `${waypoint.symbol} (${waypoint.type})`};
         });
     };
 
@@ -91,10 +92,10 @@ const SystemCard: FunctionComponent<IProps> = (props: IProps) => {
                 <p>{waypoint} | {systemData.faction.symbol} | {systemData.type}</p>
                 <h3>Waypoints in system {system}</h3>
                 <Dropdown placeholder="Select Waypoint" options={options} selectWaypoint={selectWaypoint}/>
-                <Collapsible label={selectedWaypoint}>
+                <Collapsible label={`${waypointData[selectedWaypointIndex].symbol} (${waypointData[selectedWaypointIndex].type})`}>
                     <ul>
                         {waypointData[selectedWaypointIndex].traits.map((trait, index) => {
-                            return <p key={index}>{trait && trait.name}: {trait.description}</p>;
+                            return <li key={index}>{trait && trait.name}: {trait.description}</li>;
                         })}
                     </ul>
                 </Collapsible>

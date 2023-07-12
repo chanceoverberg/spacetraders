@@ -21,7 +21,6 @@ const initialContractData: ContractData[] = [{
   async function getContractData<ContractData>(): Promise<ContractData> {
     const response = await fetch(`https://api.spacetraders.io/v2/my/contracts`, getOptions);
     const response_1 = await response.json();
-    console.log(response_1.data);
     return response_1.data as ContractData;
   }
 

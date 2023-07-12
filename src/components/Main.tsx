@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import '../App.css';
 import { AgentData } from '../types';
 import Agent from './Agent';
@@ -32,12 +32,12 @@ function Main (props: MainProps) {
 
   async function getAgentDataOnLoad() {
     setAgentData(await getAgentData());
+  }
+
+  useEffect(() => {
     setSystem(agentData.headquarters.slice(0,6));
     setWaypoint(agentData.headquarters);
-    console.log(system);
-    console.log(waypoint);
-    console.log(agentData);
-  }
+  },[system, waypoint, agentData]);
 
   const page: JSX.Element | null = useMemo(() => {
     
@@ -58,7 +58,7 @@ function Main (props: MainProps) {
         return null;
       }
     }
-  }, [props.currentPage, agentData, getAgentDataOnLoad, system, waypoint]);
+  }, [props.currentPage, agentData, system, waypoint]);
 
 
   return (

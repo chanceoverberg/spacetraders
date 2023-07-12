@@ -8,7 +8,6 @@ function App() {
 
   const changePage = (page: string) => {
     setCurrentPage(page);
-    console.log(page);
   }
 
   const page: JSX.Element | null = useMemo(() => {

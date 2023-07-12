@@ -159,7 +159,8 @@ a {
   border: 1px solid rgb(128, 123, 123);
   position: relative;
   border-radius: 5px;
-  width: 20vw;
+  width: 30vw;
+  margin-bottom: 5px;
 }
 
 .dropdown-input {
