@@ -1,10 +1,13 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import getOptions from "../getOptions";
 import Collapsible from "./Collapsible";
-import { initialFleetData, initialSystemData, initialWaypointData } from "../initialValues";
+import { initialFleetData, initialWaypointData } from "../initialValues";
 import Dropdown from "./Dropdown";
-import { Nav } from "../types";
+import { Nav, RefuelData } from "../types";
 import postOptions from "../postOptions";
+import CountdownTimer from "./CountdownTimer";
+import getSellApiOptions from "../apiOptions/getSellApiOptions";
+import getNavigateApiOptions from "../apiOptions/getNavigateApiOptions";
 
 interface IProps {
     system: string,
@@ -49,6 +52,39 @@ const FleetCard: FunctionComponent<IProps> = (props: IProps) => {
         return response_1.data as Nav;
       }
 
+      async function refuelShip(ship: string): Promise<RefuelData> {
+        const response = await fetch(`https://api.spacetraders.io/v2/my/ships/${ship}/refuel`, postOptions);
+        const response_1 = await response.json();
+        setShipAction(!shipAction);
+        return response_1.data as RefuelData;
+      }
+
+      async function navigateShip(ship: string, waypoint: string): Promise<any> {
+        const navigatePostOptions = getNavigateApiOptions(waypoint);
+        const response = await fetch(`https://api.spacetraders.io/v2/my/ships/${ship}/navigate`, navigatePostOptions);
+        const response_1 = await response.json();
+        console.log(response_1.data);
+        setShipAction(!shipAction);
+        return response_1.data;
+      }
+
+      async function extract(ship: string): Promise<any> {
+        const response = await fetch(`https://api.spacetraders.io/v2/my/ships/${ship}/extract`, postOptions);
+        const response_1 = await response.json();
+        console.log(response_1.data);
+        setShipAction(!shipAction);
+        return response_1.data;
+      }
+
+      async function sell(ship: string, symbol: string, units: string): Promise<any> {
+        const sellPostOptions = getSellApiOptions(symbol, units);
+        const response = await fetch(`https://api.spacetraders.io/v2/my/ships/${ship}/sell`, sellPostOptions);
+        const response_1 = await response.json();
+        console.log(response_1.data);
+        setShipAction(!shipAction);
+        return response_1.data;
+      }
+
     async function getFleetDataOnLoad() {
         setFleetData(await getFleetData());
     }
@@ -57,6 +93,11 @@ const FleetCard: FunctionComponent<IProps> = (props: IProps) => {
     const selectWaypoint = (waypoint: string, index: number): void => {
         setSelectedWaypoint(waypoint);
         setSelectedWaypointIndex(index);
+    }
+
+    // Passed to CountdownTimer so it can update shipAction state
+    const updateShipAction = () => {
+        setShipAction(!shipAction);
     }
 
     async function getSystemDataOnLoad() {
@@ -87,6 +128,11 @@ const FleetCard: FunctionComponent<IProps> = (props: IProps) => {
         getFleetDataOnLoad();
     }, [shipAction]);
 
+    const calcArrivalMS = (arrival: string) => {
+        const arrive = new Date(arrival).getTime();
+        return arrive;
+    }
+
     return (
         <div className="card">
             <h1>Fleet:</h1>
@@ -95,8 +141,13 @@ const FleetCard: FunctionComponent<IProps> = (props: IProps) => {
                     return (
                         <Collapsible label={`Ship ${index+1}`} key={index}>
                                 <h2>Cargo ({ship.cargo.units}/{ship.cargo.capacity}):</h2>
-                                <p>Fuel: {ship.fuel.current}/{ship.fuel.current}</p>
+                                <ul>
+                                    {ship.cargo.inventory.map((item) => {
+                                        return <li key={item.name}>{item.name}: {item.units}{ship.nav.status === "DOCKED" && <button className="accept-button" onClick={() => {sell(ship.symbol, item.symbol, item.units.toString())}}>Sell</button>}</li>
+                                    })}
+                                </ul>
                                 <h4>Nav details:</h4>
+                                <p className="p-no-margin">Fuel: {ship.fuel.current}/{ship.fuel.capacity}</p>
                                 <ul>
                                     <li>Flight mode: {ship.nav.flightMode}</li>
                                     <li>Status: {ship.nav.status} in system {ship.nav.systemSymbol} at waypoint {ship.nav.waypointSymbol}</li>
@@ -107,13 +158,15 @@ const FleetCard: FunctionComponent<IProps> = (props: IProps) => {
                                     <button className="accept-button" onClick={() => orbitShip(ship.symbol)}>Orbit</button> 
                                     : 
                                     <button className="accept-button" onClick={() => dockShip(ship.symbol)}>Dock</button>}
-                                    <button className="accept-button">Refuel</button>
+                                    <button className="accept-button" onClick={() => refuelShip(ship.symbol)}>Refuel</button>
+                                    {ship.nav.route.destination.type === "ASTEROID_FIELD" && ship.nav.status === "IN_ORBIT" && <button className="accept-button" onClick={() => extract(ship.symbol)}>Extract</button>}
                                 </div>
                                 <p>Select waypoint to navigate to:</p>
                                 <Dropdown placeholder="Waypoint" options={options} selectWaypoint={selectWaypoint}/>
                                 {selectedWaypoint === "" ? null : 
-                                    <button className="accept-button">Navigate to {waypointData[selectedWaypointIndex].symbol}</button>
+                                    <button className="accept-button" onClick={() => navigateShip(ship.symbol, waypointData[selectedWaypointIndex].symbol)}>Navigate</button>
                                 }
+                                {ship.nav.status === "IN_TRANSIT" ? <CountdownTimer targetDate={calcArrivalMS(ship.nav.route.arrival)} updateShipAction={updateShipAction} /> : null}
                         </Collapsible>
                 )}) : <p>no data</p>
             }

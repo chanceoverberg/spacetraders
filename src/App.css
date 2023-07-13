@@ -94,7 +94,7 @@ a {
   border-radius: 25px;
   border: 2px;
   padding: 0px 2px 20px 20px;
-  height: 80vh;
+  height: 90vh;
   width: 95vw;
   overflow-y:scroll;
   overflow-x: hidden;
@@ -202,4 +202,64 @@ a {
 .dropdown-item.selected {
   background-color: #0047b0;
   color: #fff;
+}
+
+.expired-notice {
+  text-align: center;
+  border: 1px solid #ebebeb;
+  border-radius: 0.25rem;
+  width: 20vw;
+}
+
+.expired-notice > span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: red;
+}
+
+.expired-notice > p {
+  font-size: 1.5rem;
+}
+
+.show-counter {
+  /* padding: 0.5rem; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  border: 1px solid rgb(128, 123, 123);
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: #ffff;
+  width: 30vw;
+}
+
+.show-counter .countdown {
+  line-height: 1.25rem;
+  padding: 0 0.75rem 0 0.75rem;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  color: #ffff;
+}
+
+.show-counter .countdown.danger {
+  color: #ff0000;
+}
+
+.show-counter .countdown > p {
+  margin: 0;
+}
+
+.show-counter .countdown > span {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.p-no-margin {
+  margin: 0px;
 }

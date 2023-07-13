@@ -69,6 +69,7 @@ const SystemCard: FunctionComponent<IProps> = (props: IProps) => {
                 <h3>Waypoints in system {system}</h3>
                 <Dropdown placeholder="Select Waypoint" options={options} selectWaypoint={selectWaypoint}/>
                 <Collapsible label={`${waypointData[selectedWaypointIndex].symbol} (${waypointData[selectedWaypointIndex].type})`}>
+                    <p className="p-no-margin">Coordinates: ({waypointData[selectedWaypointIndex].x}, {waypointData[selectedWaypointIndex].y})</p>
                     <ul>
                         {waypointData[selectedWaypointIndex].traits.map((trait, index) => {
                             return <li key={index}>{trait && trait.name}: {trait.description}</li>;

@@ -2,6 +2,8 @@ import { FunctionComponent, useEffect, useState } from "react";
 import getOptions from "../getOptions";
 import postOptions from "../postOptions";
 import { initialContractData } from "../initialValues";
+import { ShipData } from "../types";
+import getDeliverApiOptions from "../apiOptions/getDeliverApiOptions";
 
   async function getContractData<ContractData>(): Promise<ContractData> {
     const response = await fetch(`https://api.spacetraders.io/v2/my/contracts`, getOptions);
@@ -18,6 +20,43 @@ import { initialContractData } from "../initialValues";
 const ContractCard: FunctionComponent = () => {
 
     const [contractData, setContractData] = useState(initialContractData);
+    const [deliverAction, setDeliverAction] = useState(false);
+    const [shipsCanFulfill, setShipsCanFulfill] = useState(false);
+    const [shipToDeliver, setShipToFulfill] = useState("");
+    const [tradeSymbolToDeliver, setTradeSymbolToDeliver] = useState("");
+    const [unitsToDeliver, setUnitsToDeliver] = useState("0");
+
+    async function getShipsCanFulfill(contractIndex: number) {
+        const response = await fetch('https://api.spacetraders.io/v2/my/ships', getOptions);
+        const response_1 = await response.json();
+        const fleetData: ShipData[] = response_1.data;
+        console.log(fleetData);
+        console.log(fleetData[0].symbol);
+        fleetData.map((ship) => {
+            contractData[contractIndex].terms.deliver.map((req) => {
+                if (ship.nav.waypointSymbol === req.destinationSymbol) {
+                    console.log("a ship is here!");
+                    setShipToFulfill(ship.symbol);
+                    ship.cargo.inventory.map((item) => {
+                        if (item.symbol === req.tradeSymbol) {
+                            console.log("and it has the required item: " + item.symbol);
+                            setTradeSymbolToDeliver(item.symbol);
+                            setUnitsToDeliver("1");
+                            setShipsCanFulfill(true);
+                        }
+                    });
+                }
+            })
+        });
+      }
+
+      async function deliverContractItem(contractID: string, shipSymbol: string, tradeSymbol: string, units: string) {
+        const sellPostOptions = getDeliverApiOptions(shipSymbol, tradeSymbol, units);
+        const response = await fetch(`https://api.spacetraders.io/v2/my/contracts/${contractID}/deliver`, sellPostOptions);
+        const response_1 = await response.json();
+        console.log(response_1.data);
+        setDeliverAction(!deliverAction);
+      }
 
     async function getContractDataOnLoad() {
         setContractData(await getContractData());
@@ -25,7 +64,11 @@ const ContractCard: FunctionComponent = () => {
 
     useEffect(() => {
         getContractDataOnLoad();
-    },[]); 
+    },[]);
+
+    useEffect(() => {
+        getContractDataOnLoad();
+    }, [deliverAction]);
 
     return (
         <div className="card">
@@ -46,14 +89,16 @@ const ContractCard: FunctionComponent = () => {
                         {contract.terms.deliver ? contract.terms.deliver.map((req, reqIndex) => {
                             return (
                                 <div key={reqIndex+100}>
-                                    <li>Delivery destination: {req.destinationSymbol}</li>
+                                    <li>Delivery waypoint: {req.destinationSymbol}</li>
                                     <li>Item: {req.tradeSymbol.toLowerCase()} ({contract.type.toLowerCase()})</li>
                                     <li>Units required: {req.unitsRequired}</li>
                                     <li>Units fulfilled: {req.unitsFulfilled}</li>
+                                    {shipsCanFulfill && <button className="accept-button" onClick={() => deliverContractItem(contract.id,shipToDeliver,tradeSymbolToDeliver,unitsToDeliver)}>Deliver item</button>}
                                 </div>
                             )}) : null}
                     </ul>
                     {!contract.accepted ? <button className="accept-button" onClick={() => acceptContract(contract.id)}>Accept Contract</button> : null}
+                    {shipsCanFulfill === false && <button className="accept-button" onClick={() => getShipsCanFulfill(index)}>Get ship data</button>}
                 </div>);
             })}
         </div>

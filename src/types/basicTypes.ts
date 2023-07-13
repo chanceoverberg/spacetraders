@@ -98,31 +98,31 @@ export interface AgentData {
   }
 
   export interface Extraction {
-    shipSymbol: string
-    yield: Yield
+    shipSymbol: string,
+    yield: Yield,
   }
 
   export interface Yield {
-    symbol: string
+    symbol: string,
     units: number
   }
 
   export interface Cooldown {
-    shipSymbol: string
-    totalSeconds: number
-    remainingSeconds: number
-    expiration: string
+    shipSymbol: string,
+    totalSeconds: number,
+    remainingSeconds: number,
+    expiration: string,
   }
 
   export interface Transaction {
-    waypointSymbol: string
-    shipSymbol: string
-    tradeSymbol: string
-    type: string
-    units: number
-    pricePerUnit: number
-    totalPrice: number
-    timestamp: string
+    waypointSymbol: string,
+    shipSymbol: string,
+    tradeSymbol: string,
+    type: string,
+    units: number,
+    pricePerUnit: number,
+    totalPrice: number,
+    timestamp: string,
   }
 
   export interface WaypointData {
@@ -136,3 +136,15 @@ export interface AgentData {
     chart: {submittedBy: string, submittedOn: string},
     faction: {symbol: string},
   }
+
+  export interface RefuelData {
+    agent: AgentData,
+    fuel: Fuel,
+    transaction: Transaction,
+  }
+
+export interface ExtractData {
+  extraction: Extraction,
+  cooldown: Cooldown,
+  cargo: Cargo,
+}
