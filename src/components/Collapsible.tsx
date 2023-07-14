@@ -17,7 +17,7 @@ const Collapsible: FunctionComponent<IProps> = (props: IProps) => {
     return (
         <div>
             <div className="collapsible-button-container">
-            <button onClick={toggle} className="collapsible-toggle-button">{label}</button>
+                <button onClick={toggle} className="collapsible-toggle-button">{label}</button>
             </div>
             
             <div className={open ? "content-show" : "content-parent"}>

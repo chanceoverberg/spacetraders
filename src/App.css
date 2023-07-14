@@ -132,6 +132,13 @@ a {
   padding: 0.5rem;
   border-radius: 5px;
   height: auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 22vh;
+}
+
+.content-half {
+  min-width: 40vw;
 }
   
 .content-parent {
@@ -234,7 +241,8 @@ a {
   border-radius: 0.25rem;
   text-decoration: none;
   color: #ffff;
-  width: 30vw;
+  width: 25vw;
+  margin-top: 3px;
 }
 
 .show-counter .countdown {

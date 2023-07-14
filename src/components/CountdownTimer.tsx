@@ -4,7 +4,7 @@ import DateTimeDisplay from './DateTimeDisplay';
 
 const ExpiredNotice = () => {
     return (
-        <p className="p-no-margin">You have arrived</p>
+        <></>
     );
   };
 
@@ -46,7 +46,7 @@ const CountdownTimer: FunctionComponent<IProps> = (props: IProps) => {
 
     // Updates shipAction in FleetCard when the ship arrives so that the ship data refreshes
     useEffect(() => {
-        if (days + hours + minutes + seconds <= 0) {
+        if (days + hours + minutes + seconds === 0) {
             updateShipAction();
         }
     },[days, hours, minutes, seconds]);

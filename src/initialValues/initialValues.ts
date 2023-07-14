@@ -1,4 +1,4 @@
-import { AgentData, ContractData, ShipData, SystemData, WaypointData } from "../types";
+import { AgentData, ContractData, ExtractData, ShipData, SystemData, WaypointData } from "../types";
 
 
 export const initialSystemData: SystemData = {
@@ -48,7 +48,7 @@ export const initialAgentData: AgentData = {
     startingFaction: ""
   }
 
-  export const initialFleetData: ShipData[] = [
+export const initialFleetData: ShipData[] = [
     {
         symbol: "",
         cargo: {
@@ -95,3 +95,29 @@ export const initialAgentData: AgentData = {
         }
     }
 ];
+
+export const initialExtractData: ExtractData = {
+    extraction: {
+        shipSymbol: "",
+        yield: {
+            symbol: "",
+            units: 0,
+        },
+    },
+    cooldown: {
+        shipSymbol: "",
+        totalSeconds: 0,
+        remainingSeconds: 0,
+        expiration: "",
+    },
+    cargo: {
+        capacity: 0,
+        inventory: [{
+            description: "",
+            name: "",
+            symbol: "",
+            units: 0,
+        }],
+        units: 0,
+    },
+}

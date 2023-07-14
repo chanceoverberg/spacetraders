@@ -30,18 +30,16 @@ const ContractCard: FunctionComponent = () => {
         const response = await fetch('https://api.spacetraders.io/v2/my/ships', getOptions);
         const response_1 = await response.json();
         const fleetData: ShipData[] = response_1.data;
-        console.log(fleetData);
-        console.log(fleetData[0].symbol);
         fleetData.map((ship) => {
             contractData[contractIndex].terms.deliver.map((req) => {
                 if (ship.nav.waypointSymbol === req.destinationSymbol) {
-                    console.log("a ship is here!");
+                    console.log("a ship is here: " + ship.symbol);
                     setShipToFulfill(ship.symbol);
                     ship.cargo.inventory.map((item) => {
                         if (item.symbol === req.tradeSymbol) {
                             console.log("and it has the required item: " + item.symbol);
                             setTradeSymbolToDeliver(item.symbol);
-                            setUnitsToDeliver("1");
+                            setUnitsToDeliver(item.units.toString());
                             setShipsCanFulfill(true);
                         }
                     });
